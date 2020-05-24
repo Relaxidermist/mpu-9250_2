@@ -84,7 +84,7 @@ void CalculateTilt(){
   static unsigned long t_fin;
   unsigned long delta_t;
 
-  ACC_THETA_X = (180/3.141)*atan((ACC_Y)/(ACC_Z));
+  ACC_THETA_X = (-180/3.141)*atan((ACC_Y)/(ACC_Z));
   ACC_THETA_Y = (180/3.141)*atan((ACC_X)/(ACC_Z));
 
   if(init_flag != true){
@@ -102,8 +102,8 @@ void CalculateTilt(){
   GYRO_DTHETA_X = 0.001*((GYRO_X-GYRO_CAL_X)*delta_t);
   GYRO_DTHETA_Y = 0.001*((GYRO_Y-GYRO_CAL_Y)*delta_t);
 
-  THETA_X += 0.9998*GYRO_DTHETA_X + 0.0002*(ACC_THETA_X - ACC_CAL_X);
-  THETA_Y += 0.9998*GYRO_DTHETA_Y + 0.0002*(ACC_THETA_Y - ACC_CAL_Y);
+  THETA_X += 1*GYRO_DTHETA_X + 0.000*(ACC_THETA_X - ACC_CAL_X);
+  THETA_Y += 1*GYRO_DTHETA_Y + 0.000*(ACC_THETA_Y - ACC_CAL_Y);
 
   t_start = millis();
 }
@@ -127,7 +127,7 @@ void Calibrate(){
    GYRO_CAL_X = GYRO_CAL_X + GYRO_X;
    GYRO_CAL_Y = GYRO_CAL_Y + GYRO_Y;
 
-   ACC_THETA_X = (180/3.141)*atan((ACC_Y)/(ACC_Z));
+   ACC_THETA_X = (-180/3.141)*atan((ACC_Y)/(ACC_Z));
    ACC_THETA_Y = (180/3.141)*atan((ACC_X)/(ACC_Z));
    
    ACC_CAL_X = ACC_CAL_X + ACC_THETA_X;
@@ -198,7 +198,7 @@ float ReadAccelerometer(){
   ACC_Y = (float(ACC_Y_H) + float(ACC_Y_L))/16384;
 
   ACC_Z_H = ACC_Z_H << 8;
-  ACC_Z = (float(ACC_Z_H) + float(ACC_Z_L))/16384;
+  ACC_Z = -1*(float(ACC_Z_H) + float(ACC_Z_L))/16384;
 
   return ACC_X;
   
