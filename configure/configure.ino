@@ -102,8 +102,8 @@ void CalculateTilt(){
   GYRO_DTHETA_X = 0.001*((GYRO_X-GYRO_CAL_X)*delta_t);
   GYRO_DTHETA_Y = 0.001*((GYRO_Y-GYRO_CAL_Y)*delta_t);
 
-  THETA_X += 1*GYRO_DTHETA_X + 0.000*(ACC_THETA_X - ACC_CAL_X);
-  THETA_Y += 1*GYRO_DTHETA_Y + 0.000*(ACC_THETA_Y - ACC_CAL_Y);
+  THETA_X += 0.99999*GYRO_DTHETA_X + 0.00001*(ACC_THETA_X - ACC_CAL_X);
+  THETA_Y += 0.99999*GYRO_DTHETA_Y + 0.00001*(ACC_THETA_Y - ACC_CAL_Y);
 
   t_start = millis();
 }
@@ -113,9 +113,9 @@ void PrintResult(){
   Serial.print(" ");
   Serial.print(THETA_Y);
   Serial.print(" ");
-  Serial.print(ACC_THETA_X);
+  Serial.print(ACC_THETA_X-ACC_CAL_X);
   Serial.print(" ");
-  Serial.println(ACC_THETA_Y);
+  Serial.println(ACC_THETA_Y-ACC_CAL_Y);
   
 }
 
